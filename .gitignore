@@ -1,6 +1,2 @@
-downloads/jdk-*
-downloads/*.rpm
-downloads/*.deb
-downloads/*.tar.gz
-downloads/*.zip
+*.log
 tmp/*

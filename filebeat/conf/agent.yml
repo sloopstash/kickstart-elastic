@@ -83,10 +83,10 @@ filebeat.modules:
     #input:
 
 #----------------------------- Elasticsearch Module -----------------------------
-- module: elasticsearch
+#- module: elasticsearch
   # Server log
-  server:
-    enabled: true
+  #server:
+    #enabled: true
 
     # Set custom paths for the log files. If left empty,
     # Filebeat will choose the paths depending on your OS.
@@ -95,23 +95,14 @@ filebeat.modules:
     # Convert the timestamp to UTC. Requires Elasticsearch >= 6.1.
     #var.convert_timezone: false
 
-  gc:
-    enabled: true
+  #gc:
+    #enabled: true
     # Set custom paths for the log files. If left empty,
     # Filebeat will choose the paths depending on your OS.
     #var.paths:
 
-  audit:
-    enabled: true
-    # Set custom paths for the log files. If left empty,
-    # Filebeat will choose the paths depending on your OS.
-    #var.paths:
-
-    # Convert the timestamp to UTC. Requires Elasticsearch >= 6.1.
-    #var.convert_timezone: false
-
-  slowlog:
-    enabled: true
+  #audit:
+    #enabled: true
     # Set custom paths for the log files. If left empty,
     # Filebeat will choose the paths depending on your OS.
     #var.paths:
@@ -119,8 +110,17 @@ filebeat.modules:
     # Convert the timestamp to UTC. Requires Elasticsearch >= 6.1.
     #var.convert_timezone: false
 
-  deprecation:
-    enabled: true
+  #slowlog:
+    #enabled: true
+    # Set custom paths for the log files. If left empty,
+    # Filebeat will choose the paths depending on your OS.
+    #var.paths:
+
+    # Convert the timestamp to UTC. Requires Elasticsearch >= 6.1.
+    #var.convert_timezone: false
+
+  #deprecation:
+    #enabled: true
     # Set custom paths for the log files. If left empty,
     # Filebeat will choose the paths depending on your OS.
     #var.paths:
@@ -130,10 +130,10 @@ filebeat.modules:
 
 
 #-------------------------------- Haproxy Module --------------------------------
-- module: haproxy
+#- module: haproxy
   # All logs
-  log:
-    enabled: true
+  #log:
+    #enabled: true
 
     # Set which input to use between syslog (default) or file.
     #var.input:
@@ -207,9 +207,9 @@ filebeat.modules:
     #input:
 
 #------------------------------- Iptables Module -------------------------------
-- module: iptables
-  log:
-    enabled: true
+#- module: iptables
+  #log:
+    #enabled: true
 
     # Set which input to use between syslog (default) or file.
     #var.input:
@@ -219,10 +219,10 @@ filebeat.modules:
     #var.paths:
 
 #--------------------------------- Kafka Module ---------------------------------
-- module: kafka
+#- module: kafka
   # All logs
-  log:
-    enabled: true
+  #log:
+    #enabled: true
 
     # Set custom paths for Kafka. If left empty,
     # Filebeat will look under /opt.
@@ -236,10 +236,10 @@ filebeat.modules:
     #var.convert_timezone: false
 
 #-------------------------------- Kibana Module --------------------------------
-- module: kibana
+#- module: kibana
   # All logs
-  log:
-    enabled: true
+  #log:
+    #enabled: true
 
     # Set custom paths for the log files. If left empty,
     # Filebeat will choose the paths depending on your OS.
@@ -335,9 +335,9 @@ filebeat.modules:
     #var.convert_timezone: false
 
 #-------------------------------- Osquery Module --------------------------------
-- module: osquery
-  result:
-    enabled: true
+#- module: osquery
+  #result:
+    #enabled: true
 
     # Set custom paths for the log files. If left empty,
     # Filebeat will choose the paths depending on your OS.
@@ -383,10 +383,10 @@ filebeat.modules:
     #var.password:
 
 #------------------------------- Suricata Module -------------------------------
-- module: suricata
+#- module: suricata
   # All logs
-  eve:
-    enabled: true
+  #eve:
+    #enabled: true
 
     # Set custom paths for the log files. If left empty,
     # Filebeat will choose the paths depending on your OS.
@@ -423,18 +423,18 @@ filebeat.inputs:
 # * stdin: Reads the standard in
 
 #------------------------------ Log input --------------------------------
-- type: log
+#- type: log
 
   # Change to true to enable this input configuration.
-  enabled: false
+  #enabled: false
 
   # Paths that should be crawled and fetched. Glob based paths.
   # To fetch all ".log" files from a specific level of subdirectories
   # /var/log/*/*.log can be used.
   # For each file found under this path, a harvester is started.
   # Make sure not file is defined twice as this can lead to unexpected behaviour.
-  paths:
-    - /var/log/*.log
+  #paths:
+    #- /var/log/*.log
     #- c:\programdata\elasticsearch\logs\*
 
   # Configure the file encoding for reading files with international characters
@@ -817,7 +817,7 @@ filebeat.inputs:
 
 # Name of the registry file. If a relative path is used, it is considered relative to the
 # data path.
-#filebeat.registry_file: ${path.data}/registry
+filebeat.registry_file: ${path.home}/registry
 
 # The permissions mask to apply on registry file. The default value is 0600.
 # Must be a valid Unix-style file permissions mask expressed in octal notation.
@@ -837,19 +837,19 @@ filebeat.inputs:
 
 # How long filebeat waits on shutdown for the publisher to finish.
 # Default is 0, not waiting.
-#filebeat.shutdown_timeout: 0
+filebeat.shutdown_timeout: 5
 
 # Enable filebeat config reloading
-#filebeat.config:
+filebeat.config:
   #inputs:
     #enabled: false
     #path: inputs.d/*.yml
     #reload.enabled: true
     #reload.period: 10s
-  #modules:
+  modules:
     #enabled: false
-    #path: modules.d/*.yml
-    #reload.enabled: true
+    path: ${path.home}/modules.d/*.yml
+    reload.enabled: false
     #reload.period: 10s
 
 #================================ General ======================================
@@ -1091,7 +1091,7 @@ filebeat.inputs:
 #-------------------------- Elasticsearch output -------------------------------
 output.elasticsearch:
   # Boolean flag to enable or disable the output module.
-  #enabled: true
+  enabled: false
 
   # Array of hosts to connect to.
   # Scheme and port can be left out and will be set to the default (http and 9200)
@@ -1201,12 +1201,12 @@ output.elasticsearch:
 
 
 #----------------------------- Logstash output ---------------------------------
-#output.logstash:
+output.logstash:
   # Boolean flag to enable or disable the output module.
-  #enabled: true
+  enabled: true
 
   # The Logstash hosts
-  #hosts: ["localhost:5044"]
+  hosts: ["localhost:5044"]
 
   # Number of workers per Logstash host.
   #worker: 1
@@ -1626,38 +1626,38 @@ output.elasticsearch:
 # distribution (for example, the sample dashboards).
 # If not set by a CLI flag or in the configuration file, the default for the
 # home path is the location of the binary.
-#path.home:
+path.home: /usr/local/lib/filebeat
 
 # The configuration path for the filebeat installation. This is the default
 # base path for configuration files, including the main YAML configuration file
 # and the Elasticsearch template file. If not set by a CLI flag or in the
 # configuration file, the default for the configuration path is the home path.
-#path.config: ${path.home}
+path.config: /opt/kickstart-elk/filebeat/conf
 
 # The data path for the filebeat installation. This is the default base path
 # for all the files in which filebeat needs to store its data. If not set by a
 # CLI flag or in the configuration file, the default for the data path is a data
 # subdirectory inside the home path.
-#path.data: ${path.home}/data
+path.data: /opt/kickstart-elk/filebeat/data
 
 # The logs path for a filebeat installation. This is the default location for
 # the Beat's log files. If not set by a CLI flag or in the configuration file,
 # the default for the logs path is a logs subdirectory inside the home path.
-#path.logs: ${path.home}/logs
+path.logs: /opt/kickstart-elk/filebeat/log
 
 #================================ Keystore ==========================================
 # Location of the Keystore containing the keys and their sensitive values.
-#keystore.path: "${path.config}/beats.keystore"
+#keystore.path: "${path.home}/beats.keystore"
 
 #============================== Dashboards =====================================
 # These settings control loading the sample dashboards to the Kibana index. Loading
 # the dashboards are disabled by default and can be enabled either by setting the
 # options here, or by using the `-setup` CLI flag or the `setup` command.
-#setup.dashboards.enabled: false
+setup.dashboards.enabled: false
 
 # The directory from where to read the dashboards. The default is the `kibana`
 # folder in the home path.
-#setup.dashboards.directory: ${path.home}/kibana
+setup.dashboards.directory: ${path.home}/kibana
 
 # The URL from where to download the dashboards archive. It is used instead of
 # the directory if it has a value.
@@ -1701,19 +1701,19 @@ output.elasticsearch:
 # These settings can be adjusted to load your own template or overwrite existing ones.
 
 # Set to false to disable template loading.
-#setup.template.enabled: true
+setup.template.enabled: false
 
 # Template name. By default the template name is "filebeat-%{[beat.version]}"
 # The template name and pattern has to be set in case the Elasticsearch index pattern is modified.
-#setup.template.name: "filebeat-%{[beat.version]}"
+setup.template.name: "filebeat-%{[beat.version]}"
 
 # Template pattern. By default the template pattern is "-%{[beat.version]}-*" to apply to the default index settings.
 # The first part is the version of the beat and then -* is used to match all daily indices.
 # The template name and pattern has to be set in case the Elasticsearch index pattern is modified.
-#setup.template.pattern: "filebeat-%{[beat.version]}-*"
+setup.template.pattern: "filebeat-%{[beat.version]}-*"
 
 # Path to fields.yml file to generate the template
-#setup.template.fields: "${path.config}/fields.yml"
+setup.template.fields: "${path.home}/fields.yml"
 
 # A list of fields to be added to the template and Kibana index pattern. Also
 # specify setup.template.overwrite: true to overwrite the existing template.
@@ -1726,13 +1726,13 @@ output.elasticsearch:
 #setup.template.json.enabled: false
 
 # Path to the JSON template file
-#setup.template.json.path: "${path.config}/template.json"
+setup.template.json.path: "${path.home}/template.json"
 
 # Name under which the template is stored in Elasticsearch
 #setup.template.json.name: ""
 
 # Overwrite existing template
-#setup.template.overwrite: false
+setup.template.overwrite: false
 
 # Elasticsearch template settings
 setup.template.settings:
@@ -1740,8 +1740,8 @@ setup.template.settings:
   # A dictionary of settings to place into the settings.index dictionary
   # of the Elasticsearch template. For more details, please check
   # https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping.html
-  #index:
-    #number_of_shards: 1
+  index:
+    number_of_shards: 2
     #codec: best_compression
     #number_of_routing_shards: 30
 
@@ -1760,7 +1760,7 @@ setup.kibana:
   # Scheme and port can be left out and will be set to the default (http and 5601)
   # In case you specify and additional path, the scheme is required: http://localhost:5601/path
   # IPv6 addresses should always be defined as: https://[2001:db8::1]:5601
-  #host: "localhost:5601"
+  host: "localhost:5601"
 
   # Optional protocol and basic auth credentials.
   #protocol: "https"
@@ -1810,7 +1810,7 @@ setup.kibana:
 
 # Sets log level. The default log level is info.
 # Available log levels are: error, warning, info, debug
-#logging.level: info
+logging.level: info
 
 # Enable debug output for selected components. To enable all selectors use ["*"]
 # Other available selectors are "beat", "publish", "service"
@@ -1838,10 +1838,10 @@ logging.to_files: true
 logging.files:
   # Configure the path where the logs are written. The default is the logs directory
   # under the home path (the binary location).
-  #path: /var/log/filebeat
+  path: ${path.logs}
 
   # The name of the files where the logs are written to.
-  #name: filebeat
+  name: agent.log
 
   # Configure log file size limit. If limit is reached, log file will be
   # automatically rotated
@@ -1852,7 +1852,7 @@ logging.files:
 
   # The permissions mask to apply when rotating log files. The default value is 0600.
   # Must be a valid Unix-style file permissions mask expressed in octal notation.
-  #permissions: 0600
+  permissions: 0644
 
   # Enable log file rotation on time intervals in addition to size-based rotation.
   # Intervals must be at least 1s. Values of 1m, 1h, 24h, 7*24h, 30*24h, and 365*24h
@@ -1975,15 +1975,15 @@ logging.files:
 # append ?pretty to the URL.
 
 # Defines if the HTTP endpoint is enabled.
-#http.enabled: false
+http.enabled: false
 
 # The HTTP endpoint will bind to this hostname or IP address. It is recommended to use only localhost.
-#http.host: localhost
+http.host: localhost
 
 # Port on which the HTTP endpoint will bind. Default is 5066.
-#http.port: 5066
+http.port: 5066
 
 #============================= Process Security ================================
 
 # Enable or disable seccomp system call filtering on Linux. Default is enabled.
-#seccomp.enabled: true
+seccomp.enabled: false

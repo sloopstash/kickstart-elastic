@@ -14,22 +14,23 @@
 # of individual yaml files.
 heartbeat.config.monitors:
   # Directory + glob pattern to search for configuration files
-  path: ${path.config}/monitors.d/*.yml
+  #path: ${path.home}/monitors.d/*.yml
   # If enabled, heartbeat will periodically check the config.monitors path for changes
   reload.enabled: false
   # How often to check for changes
-  reload.period: 5s
+  #reload.period: 5s
 
 # Configure monitors
 heartbeat.monitors:
-- type: icmp # monitor type `icmp` (requires root) uses ICMP Echo Request to ping
-             # configured hosts
+# monitor type `icmp` (requires root) uses ICMP Echo Request to ping
+# configured hosts
+- type: icmp
 
   # Monitor name used for job name and document type.
-  #name: icmp
+  name: icmp
 
   # Enable/Disable monitor
-  #enabled: true
+  enabled: false
 
   # Configure task schedule using cron-like syntax
   schedule: '*/5 * * * * * *' # exactly every 5 seconds like 10:00:00, 10:00:05, ...
@@ -84,14 +85,15 @@ heartbeat.monitors:
   # How often to check for changes
   #reload.period: 1s
 
-- type: tcp # monitor type `tcp`. Connect via TCP and optionally verify endpoint
-            # by sending/receiving a custom payload
+# monitor type `tcp`. Connect via TCP and optionally verify endpoint
+# by sending/receiving a custom payload
+- type: tcp 
 
   # Monitor name used for job name and document type
-  #name: tcp
+  name: tcp
 
   # Enable/Disable monitor
-  #enabled: true
+  enabled: false
 
   # Configure task schedule
   schedule: '@every 5s' # every 5 seconds from start of beat
@@ -112,7 +114,7 @@ heartbeat.monitors:
   #     Using `tls`/`ssl`, an SSL connection is established. If no ssl is configured,
   #     system defaults will be used (not supported on windows).
   #     If `port` is missing in url, the ports setting is required.
-  hosts: ["localhost:9200"]
+  hosts: ["localhost:8001", "localhost:8002", "localhost:8003"]
 
   # Configure IP protocol types to ping on if hostnames are configured.
   # Ping all resolvable IPs if `mode` is `all`, or only one IP if `mode` is `any`.
@@ -158,20 +160,20 @@ heartbeat.monitors:
     # Interval between file file changed checks.
     #interval: 5s
 
-
-- type: http # monitor type `http`. Connect via HTTP an optionally verify response
+# monitor type `http`. Connect via HTTP an optionally verify response
+- type: http
 
   # Monitor name used for job name and document type
-  #name: http
+  name: http
 
   # Enable/Disable monitor
-  #enabled: true
+  enabled: false
 
   # Configure task schedule
   schedule: '@every 5s' # every 5 seconds from start of beat
 
   # Configure URLs to ping
-  urls: ["http://localhost:9200"]
+  urls: ["http://localhost:8001/health", "http://localhost:8002/health", "http://localhost:8003/health"]
 
   # Configure IP protocol types to ping on if hostnames are configured.
   # Ping all resolvable IPs if `mode` is `all`, or only one IP if `mode` is `any`.
@@ -191,7 +193,7 @@ heartbeat.monitors:
   #proxy_url: ''
 
   # Total test connection and data exchange timeout
-  #timeout: 16s
+  timeout: 3s
 
   # Optional Authentication Credentials
   #username: ''
@@ -236,7 +238,6 @@ heartbeat.monitors:
     #    equals:
     #      myField: expectedValue
 
-
   # NOTE: THIS FEATURE IS DEPRECATED AND WILL BE REMOVED IN A FUTURE RELEASE
   # Configure file json file to be watched for changes to the monitor:
   #watch.poll_file:
@@ -245,7 +246,6 @@ heartbeat.monitors:
 
     # Interval between file file changed checks.
     #interval: 5s
-
 
 heartbeat.scheduler:
   # Limit number of concurrent tasks executed by heartbeat. The task limit if
@@ -494,7 +494,7 @@ heartbeat.scheduler:
 #-------------------------- Elasticsearch output -------------------------------
 output.elasticsearch:
   # Boolean flag to enable or disable the output module.
-  #enabled: true
+  enabled: false
 
   # Array of hosts to connect to.
   # Scheme and port can be left out and will be set to the default (http and 9200)
@@ -604,12 +604,12 @@ output.elasticsearch:
 
 
 #----------------------------- Logstash output ---------------------------------
-#output.logstash:
+output.logstash:
   # Boolean flag to enable or disable the output module.
-  #enabled: true
+  enabled: true
 
   # The Logstash hosts
-  #hosts: ["localhost:5044"]
+  hosts: ["localhost:5044"]
 
   # Number of workers per Logstash host.
   #worker: 1
@@ -1029,38 +1029,38 @@ output.elasticsearch:
 # distribution (for example, the sample dashboards).
 # If not set by a CLI flag or in the configuration file, the default for the
 # home path is the location of the binary.
-#path.home:
+path.home: /usr/local/lib/heartbeat
 
 # The configuration path for the heartbeat installation. This is the default
 # base path for configuration files, including the main YAML configuration file
 # and the Elasticsearch template file. If not set by a CLI flag or in the
 # configuration file, the default for the configuration path is the home path.
-#path.config: ${path.home}
+path.config: /opt/kickstart-elk/heartbeat/conf
 
 # The data path for the heartbeat installation. This is the default base path
 # for all the files in which heartbeat needs to store its data. If not set by a
 # CLI flag or in the configuration file, the default for the data path is a data
 # subdirectory inside the home path.
-#path.data: ${path.home}/data
+path.data: /opt/kickstart-elk/heartbeat/data
 
 # The logs path for a heartbeat installation. This is the default location for
 # the Beat's log files. If not set by a CLI flag or in the configuration file,
 # the default for the logs path is a logs subdirectory inside the home path.
-#path.logs: ${path.home}/logs
+path.logs: /opt/kickstart-elk/heartbeat/log
 
 #================================ Keystore ==========================================
 # Location of the Keystore containing the keys and their sensitive values.
-#keystore.path: "${path.config}/beats.keystore"
+#keystore.path: "${path.home}/beats.keystore"
 
 #============================== Dashboards =====================================
 # These settings control loading the sample dashboards to the Kibana index. Loading
 # the dashboards are disabled by default and can be enabled either by setting the
 # options here, or by using the `-setup` CLI flag or the `setup` command.
-#setup.dashboards.enabled: false
+setup.dashboards.enabled: false
 
 # The directory from where to read the dashboards. The default is the `kibana`
 # folder in the home path.
-#setup.dashboards.directory: ${path.home}/kibana
+setup.dashboards.directory: ${path.home}/kibana
 
 # The URL from where to download the dashboards archive. It is used instead of
 # the directory if it has a value.
@@ -1104,19 +1104,19 @@ output.elasticsearch:
 # These settings can be adjusted to load your own template or overwrite existing ones.
 
 # Set to false to disable template loading.
-#setup.template.enabled: true
+setup.template.enabled: false
 
 # Template name. By default the template name is "heartbeat-%{[beat.version]}"
 # The template name and pattern has to be set in case the Elasticsearch index pattern is modified.
-#setup.template.name: "heartbeat-%{[beat.version]}"
+setup.template.name: "heartbeat-%{[beat.version]}"
 
 # Template pattern. By default the template pattern is "-%{[beat.version]}-*" to apply to the default index settings.
 # The first part is the version of the beat and then -* is used to match all daily indices.
 # The template name and pattern has to be set in case the Elasticsearch index pattern is modified.
-#setup.template.pattern: "heartbeat-%{[beat.version]}-*"
+setup.template.pattern: "heartbeat-%{[beat.version]}-*"
 
 # Path to fields.yml file to generate the template
-#setup.template.fields: "${path.config}/fields.yml"
+setup.template.fields: "${path.home}/fields.yml"
 
 # A list of fields to be added to the template and Kibana index pattern. Also
 # specify setup.template.overwrite: true to overwrite the existing template.
@@ -1129,13 +1129,13 @@ output.elasticsearch:
 #setup.template.json.enabled: false
 
 # Path to the JSON template file
-#setup.template.json.path: "${path.config}/template.json"
+setup.template.json.path: "${path.home}/template.json"
 
 # Name under which the template is stored in Elasticsearch
 #setup.template.json.name: ""
 
 # Overwrite existing template
-#setup.template.overwrite: false
+setup.template.overwrite: true
 
 # Elasticsearch template settings
 setup.template.settings:
@@ -1143,8 +1143,8 @@ setup.template.settings:
   # A dictionary of settings to place into the settings.index dictionary
   # of the Elasticsearch template. For more details, please check
   # https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping.html
-  #index:
-    #number_of_shards: 1
+  index:
+    number_of_shards: 1
     #codec: best_compression
     #number_of_routing_shards: 30
 
@@ -1163,7 +1163,7 @@ setup.kibana:
   # Scheme and port can be left out and will be set to the default (http and 5601)
   # In case you specify and additional path, the scheme is required: http://localhost:5601/path
   # IPv6 addresses should always be defined as: https://[2001:db8::1]:5601
-  #host: "localhost:5601"
+  host: "localhost:5601"
 
   # Optional protocol and basic auth credentials.
   #protocol: "https"
@@ -1213,7 +1213,7 @@ setup.kibana:
 
 # Sets log level. The default log level is info.
 # Available log levels are: error, warning, info, debug
-#logging.level: info
+logging.level: info
 
 # Enable debug output for selected components. To enable all selectors use ["*"]
 # Other available selectors are "beat", "publish", "service"
@@ -1241,10 +1241,10 @@ logging.to_files: true
 logging.files:
   # Configure the path where the logs are written. The default is the logs directory
   # under the home path (the binary location).
-  #path: /var/log/heartbeat
+  path: ${path.logs}
 
   # The name of the files where the logs are written to.
-  #name: heartbeat
+  name: agent.log
 
   # Configure log file size limit. If limit is reached, log file will be
   # automatically rotated
@@ -1255,7 +1255,7 @@ logging.files:
 
   # The permissions mask to apply when rotating log files. The default value is 0600.
   # Must be a valid Unix-style file permissions mask expressed in octal notation.
-  #permissions: 0600
+  permissions: 0644
 
   # Enable log file rotation on time intervals in addition to size-based rotation.
   # Intervals must be at least 1s. Values of 1m, 1h, 24h, 7*24h, 30*24h, and 365*24h
@@ -1378,15 +1378,15 @@ logging.files:
 # append ?pretty to the URL.
 
 # Defines if the HTTP endpoint is enabled.
-#http.enabled: false
+http.enabled: false
 
 # The HTTP endpoint will bind to this hostname or IP address. It is recommended to use only localhost.
-#http.host: localhost
+http.host: localhost
 
 # Port on which the HTTP endpoint will bind. Default is 5066.
-#http.port: 5066
+http.port: 5066
 
 #============================= Process Security ================================
 
 # Enable or disable seccomp system call filtering on Linux. Default is enabled.
-#seccomp.enabled: true
+seccomp.enabled: false

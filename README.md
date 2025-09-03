@@ -1,9 +1,8 @@
-# Kickstart ELK
-Collect Telemetry data from a variety of platforms, workloads, and services to implement Observability using Elastic (ELK) stack.
+# SloopStash ELK starter-kit
 
 
 ## Getting started
-Please refer to the [wiki](https://github.com/sloopstash/kickstart-elk/wiki) for detailed instructions on how to get started with our ELK starter-kit.
+Please refer to the [documentation](https://sloopstash.com/documentation/toolkit/observability/elk/index.html) for detailed instructions on how to get started with SloopStash ELK starter-kit.
 
 
 ## Get support

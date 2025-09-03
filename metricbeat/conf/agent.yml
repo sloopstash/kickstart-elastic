@@ -14,10 +14,10 @@
 metricbeat.config.modules:
 
   # Glob pattern for configuration reloading
-  path: ${path.config}/conf.d/*.yml
+  path: ${path.home}/modules.d/*.yml
 
   # Period on which files under path should be checked for changes
-  reload.period: 10s
+  #reload.period: 10s
 
   # Set to true to enable config reloading
   reload.enabled: false
@@ -48,29 +48,29 @@ metricbeat.max_start_delay: 10s
 metricbeat.modules:
 
 #------------------------------- System Module -------------------------------
-- module: system
-  metricsets:
-    - cpu             # CPU usage
-    - load            # CPU load averages
-    - memory          # Memory usage
-    - network         # Network IO
-    - process         # Per process metrics
-    - process_summary # Process summary
-    - uptime          # System Uptime
-    - socket_summary  # Socket summary
+#- module: system
+  #metricsets:
+    #- cpu             # CPU usage
+    #- load            # CPU load averages
+    #- memory          # Memory usage
+    #- network         # Network IO
+    #- process         # Per process metrics
+    #- process_summary # Process summary
+    #- uptime          # System Uptime
+    #- socket_summary  # Socket summary
     #- core           # Per CPU core usage
     #- diskio         # Disk IO
     #- filesystem     # File system usage for each mountpoint
     #- fsstat         # File system summary metrics
     #- raid           # Raid
     #- socket         # Sockets and connection info (linux only)
-  enabled: true
-  period: 10s
-  processes: ['.*']
+  #enabled: false
+  #period: 10s
+  #processes: ['.*']
 
   # Configure the metric types that are included by these metricsets.
-  cpu.metrics:  ["percentages"]  # The other available options are normalized_percentages and ticks.
-  core.metrics: ["percentages"]  # The other available option is ticks.
+  #cpu.metrics:  ["percentages"]  # The other available options are normalized_percentages and ticks.
+  #core.metrics: ["percentages"]  # The other available option is ticks.
 
   # A list of filesystem types to ignore. The filesystem metricset will not
   # collect data from filesystems matching any of the specified types, and
@@ -123,20 +123,20 @@ metricbeat.modules:
   #diskio.include_devices: []
 
 #------------------------------ Aerospike Module -----------------------------
-- module: aerospike
-  metricsets: ["namespace"]
-  enabled: true
-  period: 10s
-  hosts: ["localhost:3000"]
+#- module: aerospike
+  #metricsets: ["namespace"]
+  #enabled: false
+  #period: 10s
+  #hosts: ["localhost:3000"]
 
 #------------------------------- Apache Module -------------------------------
-- module: apache
-  metricsets: ["status"]
-  period: 10s
-  enabled: true
+#- module: apache
+  #metricsets: ["status"]
+  #period: 10s
+  #enabled: false
 
   # Apache hosts
-  hosts: ["http://127.0.0.1"]
+  #hosts: ["http://127.0.0.1"]
 
   # Path to server status. Default server-status
   #server_status_path: "server-status"
@@ -148,34 +148,34 @@ metricbeat.modules:
   #password: password
 
 #-------------------------------- Ceph Module --------------------------------
-- module: ceph
-  metricsets: ["cluster_disk", "cluster_health", "monitor_health", "pool_disk", "osd_tree"]
-  period: 10s
-  hosts: ["localhost:5000"]
-  enabled: true
+#- module: ceph
+  #metricsets: ["cluster_disk", "cluster_health", "monitor_health", "pool_disk", "osd_tree"]
+  #period: 10s
+  #hosts: ["localhost:5000"]
+  #enabled: false
 
 #------------------------------ Couchbase Module -----------------------------
-- module: couchbase
-  metricsets: ["bucket", "cluster", "node"]
-  period: 10s
-  hosts: ["localhost:8091"]
-  enabled: true
+#- module: couchbase
+  #metricsets: ["bucket", "cluster", "node"]
+  #period: 10s
+  #hosts: ["localhost:8091"]
+  #enabled: false
 
 #------------------------------- Docker Module -------------------------------
-- module: docker
-  metricsets:
-    - "container"
-    - "cpu"
-    - "diskio"
-    - "event"
-    - "healthcheck"
-    - "info"
+#- module: docker
+  #metricsets:
+    #- "container"
+    #- "cpu"
+    #- "diskio"
+    #- "event"
+    #- "healthcheck"
+    #- "info"
     #- "image"
-    - "memory"
-    - "network"
-  hosts: ["unix:///var/run/docker.sock"]
-  period: 10s
-  enabled: true
+    #- "memory"
+    #- "network"
+  #hosts: ["unix:///var/run/docker.sock"]
+  #period: 10s
+  #enabled: false
 
   # If set to true, replace dots in labels with `_`.
   #labels.dedot: false
@@ -190,26 +190,26 @@ metricbeat.modules:
     #key:                   "/etc/pki/client/cert.key"
 
 #----------------------------- Dropwizard Module -----------------------------
-- module: dropwizard
-  metricsets: ["collector"]
-  period: 10s
-  hosts: ["localhost:8080"]
-  metrics_path: /metrics/metrics
-  namespace: example
-  enabled: true
+#- module: dropwizard
+  #metricsets: ["collector"]
+  #period: 10s
+  #hosts: ["localhost:8080"]
+  #metrics_path: /metrics/metrics
+  #namespace: example
+  #enabled: false
 
 #---------------------------- Elasticsearch Module ---------------------------
-- module: elasticsearch
-  metricsets:
-    - node
-    - node_stats
+#- module: elasticsearch
+  #metricsets:
+    #- node
+    #- node_stats
     #- index
     #- index_recovery
     #- index_summary
     #- shard
     #- ml_job
-  period: 10s
-  hosts: ["localhost:9200"]
+  #period: 10s
+  #hosts: ["localhost:9200"]
   #username: "elastic"
   #password: "changeme"
   #ssl.certificate_authorities: ["/etc/pki/root/ca.pem"]
@@ -222,33 +222,33 @@ metricbeat.modules:
   #xpack.enabled: false
 
 #----------------------------- envoyproxy Module -----------------------------
-- module: envoyproxy
-  metricsets: ["server"]
-  period: 10s
-  hosts: ["localhost:9901"]
+#- module: envoyproxy
+  #metricsets: ["server"]
+  #period: 10s
+  #hosts: ["localhost:9901"]
 
 #-------------------------------- Etcd Module --------------------------------
-- module: etcd
-  metricsets: ["leader", "self", "store"]
-  period: 10s
-  hosts: ["localhost:2379"]
+#- module: etcd
+  #metricsets: ["leader", "self", "store"]
+  #period: 10s
+  #hosts: ["localhost:2379"]
 
 #------------------------------- Golang Module -------------------------------
-- module: golang
+#- module: golang
   #metricsets:
   #  - expvar
   #  - heap
-  period: 10s
-  hosts: ["localhost:6060"]
-  heap.path: "/debug/vars"
-  expvar:
-    namespace: "example"
-    path: "/debug/vars"
+  #period: 10s
+  #hosts: ["localhost:6060"]
+  #heap.path: "/debug/vars"
+  #expvar:
+    #namespace: "example"
+    #path: "/debug/vars"
 
 #------------------------------ Graphite Module ------------------------------
-- module: graphite
-  metricsets: ["server"]
-  enabled: true
+#- module: graphite
+  #metricsets: ["server"]
+  #enabled: false
 
   # Host address to listen on. Default localhost.
   #host: localhost
@@ -270,20 +270,20 @@ metricbeat.modules:
 
 
 #------------------------------- HAProxy Module ------------------------------
-- module: haproxy
-  metricsets: ["info", "stat"]
-  period: 10s
-  hosts: ["tcp://127.0.0.1:14567"]
-  enabled: true
+#- module: haproxy
+  #metricsets: ["info", "stat"]
+  #period: 10s
+  #hosts: ["tcp://127.0.0.1:14567"]
+  #enabled: false
 
 #-------------------------------- HTTP Module --------------------------------
-- module: http
+#- module: http
   #metricsets:
   #  - json
-  period: 10s
-  hosts: ["localhost:80"]
-  namespace: "json_namespace"
-  path: "/"
+  #period: 10s
+  #hosts: ["localhost:80"]
+  #namespace: "json_namespace"
+  #path: "/"
   #body: ""
   #method: "GET"
   #username: "user"
@@ -293,12 +293,12 @@ metricbeat.modules:
   #json.is_array: false
   #dedot.enabled: false
 
-- module: http
+#- module: http
   #metricsets:
   #  - server
-  host: "localhost"
-  port: "8080"
-  enabled: false
+  #host: "localhost"
+  #port: "8080"
+  #enabled: false
   #paths:
   #  - path: "/foo"
   #    namespace: "foo"
@@ -306,15 +306,15 @@ metricbeat.modules:
   #      key: "value"
 
 #------------------------------- Jolokia Module ------------------------------
-- module: jolokia
+#- module: jolokia
   #metricsets: ["jmx"]
-  period: 10s
-  hosts: ["localhost"]
-  namespace: "metrics"
+  #period: 10s
+  #hosts: ["localhost"]
+  #namespace: "metrics"
   #path: "/jolokia/?ignoreErrors=true&canonicalNaming=false"
   #username: "user"
   #password: "secret"
-  jmx.mappings:
+  #jmx.mappings:
     #- mbean: 'java.lang:type=Runtime'
     #  attributes:
     #    - attr: Uptime
@@ -333,15 +333,15 @@ metricbeat.modules:
     #    - attr: CollectionCount
     #      field: gc.cms_collection_count
 
-  jmx.application:
-  jmx.instance:
+  #jmx.application:
+  #jmx.instance:
 
 #-------------------------------- Kafka Module -------------------------------
-- module: kafka
-  metricsets: ["consumergroup", "partition"]
-  period: 10s
-  hosts: ["localhost:9092"]
-  enabled: true
+#- module: kafka
+  #metricsets: ["consumergroup", "partition"]
+  #period: 10s
+  #hosts: ["localhost:9092"]
+  #enabled: false
 
   #client_id: metricbeat
   #retries: 3
@@ -365,12 +365,12 @@ metricbeat.modules:
   #password: ""
 
 #------------------------------- Kibana Module -------------------------------
-- module: kibana
-  metricsets: ["status"]
-  period: 10s
-  hosts: ["localhost:5601"]
-  basepath: ""
-  enabled: true
+#- module: kibana
+  #metricsets: ["status"]
+  #period: 10s
+  #hosts: ["localhost:5601"]
+  #basepath: ""
+  #enabled: false
 
   # Set to true to send data collected by module to X-Pack
   # Monitoring instead of metricbeat-* indices.
@@ -378,16 +378,16 @@ metricbeat.modules:
 
 #----------------------------- Kubernetes Module -----------------------------
 # Node metrics, from kubelet:
-- module: kubernetes
-  metricsets:
-    - container
-    - node
-    - pod
-    - system
-    - volume
-  period: 10s
-  hosts: ["localhost:10255"]
-  enabled: true
+#- module: kubernetes
+  #metricsets:
+    #- container
+    #- node
+    #- pod
+    #- system
+    #- volume
+  #period: 10s
+  #hosts: ["localhost:10255"]
+  #enabled: false
   #bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
   #ssl.certificate_authorities:
   #  - /var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt
@@ -395,51 +395,51 @@ metricbeat.modules:
   #ssl.key: "/etc/pki/client/cert.key"
 
   # Enriching parameters:
-  add_metadata: true
-  in_cluster: true
+  #add_metadata: true
+  #in_cluster: true
   # When used outside the cluster:
   #host: node_name
   #kube_config: ~/.kube/config
 
 # State metrics from kube-state-metrics service:
-- module: kubernetes
-  enabled: true
-  metricsets:
-    - state_node
-    - state_deployment
-    - state_replicaset
-    - state_statefulset
-    - state_pod
-    - state_container
-  period: 10s
-  hosts: ["kube-state-metrics:8080"]
+#- module: kubernetes
+  #enabled: false
+  #metricsets:
+    #- state_node
+    #- state_deployment
+    #- state_replicaset
+    #- state_statefulset
+    #- state_pod
+    #- state_container
+  #period: 10s
+  #hosts: ["kube-state-metrics:8080"]
 
   # Enriching parameters:
-  add_metadata: true
-  in_cluster: true
+  #add_metadata: true
+  #in_cluster: true
   # When used outside the cluster:
   #host: node_name
   #kube_config: ~/.kube/config
 
 # Kubernetes events
-- module: kubernetes
-  enabled: true
-  metricsets:
-    - event
+#- module: kubernetes
+  #enabled: false
+  #metricsets:
+    #- event
 
 # Kubernetes API server
-- module: kubernetes
-  enabled: true
-  metricsets:
-    - apiserver
-  hosts: ["https://${KUBERNETES_SERVICE_HOST}:${KUBERNETES_SERVICE_PORT}"]
+#- module: kubernetes
+  #enabled: false
+  #metricsets:
+    #- apiserver
+  #hosts: ["https://${KUBERNETES_SERVICE_HOST}:${KUBERNETES_SERVICE_PORT}"]
 
 #--------------------------------- kvm Module --------------------------------
-- module: kvm
-  metricsets: ["dommemstat"]
-  enabled: true
-  period: 10s
-  hosts: ["unix:///var/run/libvirt/libvirt-sock"]
+#- module: kvm
+  #metricsets: ["dommemstat"]
+  #enabled: false
+  #period: 10s
+  #hosts: ["unix:///var/run/libvirt/libvirt-sock"]
   # For remote hosts, setup network access in libvirtd.conf
   # and use the tcp scheme:
   # hosts: [ "tcp://<host>:16509" ]
@@ -448,31 +448,31 @@ metricbeat.modules:
   #timeout: 1s
 
 #------------------------------ Logstash Module ------------------------------
-- module: logstash
-  metricsets: ["node", "node_stats"]
-  enabled: true
-  period: 10s
-  hosts: ["localhost:9600"]
+#- module: logstash
+  #metricsets: ["node", "node_stats"]
+  #enabled: false
+  #period: 10s
+  #hosts: ["localhost:9600"]
 
 #------------------------------ Memcached Module -----------------------------
-- module: memcached
-  metricsets: ["stats"]
-  period: 10s
-  hosts: ["localhost:11211"]
-  enabled: true
+#- module: memcached
+  #metricsets: ["stats"]
+  #period: 10s
+  #hosts: ["localhost:11211"]
+  #enabled: false
 
 #------------------------------- MongoDB Module ------------------------------
-- module: mongodb
-  metricsets: ["dbstats", "status", "collstats", "metrics", "replstatus"]
-  period: 10s
-  enabled: true
+#- module: mongodb
+  #metricsets: ["dbstats", "status", "collstats", "metrics", "replstatus"]
+  #period: 10s
+  #enabled: false
 
   # The hosts must be passed as MongoDB URLs in the format:
   # [mongodb://][user:pass@]host[:port].
   # The username and password can also be set using the respective configuration
   # options. The credentials in the URL take precedence over the username and
   # password configuration options.
-  hosts: ["localhost:27017"]
+  #hosts: ["localhost:27017"]
 
   # Optional SSL. By default is off.
   #ssl.enabled: true
@@ -496,24 +496,24 @@ metricbeat.modules:
   #password: pass
 
 #-------------------------------- Munin Module -------------------------------
-- module: munin
-  metricsets: ["node"]
-  enabled: true
-  period: 10s
-  hosts: ["localhost:4949"]
-  node.namespace: node
+#- module: munin
+  #metricsets: ["node"]
+  #enabled: false
+  #period: 10s
+  #hosts: ["localhost:4949"]
+  #node.namespace: node
 
 #-------------------------------- MySQL Module -------------------------------
-- module: mysql
-  metricsets:
-    - "status"
-  #  - "galera_status"
-  period: 10s
+#- module: mysql
+  #metricsets:
+    #- "status"
+    #- "galera_status"
+  #period: 10s
 
   # Host DSN should be defined as "user:pass@tcp(127.0.0.1:3306)/"
   # The username and password can either be set in the DSN or using the username
   # and password config options. Those specified in the DSN take precedence.
-  hosts: ["root:secret@tcp(127.0.0.1:3306)/"]
+  #hosts: ["root:secret@tcp(127.0.0.1:3306)/"]
 
   # Username of hosts. Empty by default.
   #username: root
@@ -525,47 +525,47 @@ metricbeat.modules:
   #raw: false
 
 #-------------------------------- Nginx Module -------------------------------
-- module: nginx
-  metricsets: ["stubstatus"]
-  enabled: true
-  period: 10s
+#- module: nginx
+  #metricsets: ["stubstatus"]
+  #enabled: true
+  #period: 10s
 
   # Nginx hosts
-  hosts: ["http://127.0.0.1"]
+  #hosts: ["http://127.0.0.1"]
 
   # Path to server status. Default server-status
-  server_status_path: "server-status"
+  #server_status_path: "server-status"
 
 #------------------------------- PHP_FPM Module ------------------------------
-- module: php_fpm
-  metricsets:
-  - pool
+#- module: php_fpm
+  #metricsets:
+  #- pool
   #- process
-  enabled: true
-  period: 10s
-  status_path: "/status"
-  hosts: ["localhost:8080"]
+  #enabled: false
+  #period: 10s
+  #status_path: "/status"
+  #hosts: ["localhost:8080"]
 
 #----------------------------- PostgreSQL Module -----------------------------
-- module: postgresql
-  enabled: true
-  metricsets:
+#- module: postgresql
+  #enabled: false
+  #metricsets:
     # Stats about every PostgreSQL database
-    - database
+    #- database
 
     # Stats about the background writer process's activity
-    - bgwriter
+    #- bgwriter
 
     # Stats about every PostgreSQL process
-    - activity
+    #- activity
 
-  period: 10s
+  #period: 10s
 
   # The host must be passed as PostgreSQL URL. Example:
   # postgres://localhost:5432?sslmode=disable
   # The available parameters are documented here:
   # https://godoc.org/github.com/lib/pq#hdr-Connection_String_Parameters
-  hosts: ["postgres://localhost:5432"]
+  #hosts: ["postgres://localhost:5432"]
 
   # Username to use when connecting to PostgreSQL. Empty by default.
   #username: user
@@ -574,19 +574,19 @@ metricbeat.modules:
   #password: pass
 
 #----------------------------- Prometheus Module -----------------------------
-- module: prometheus
-  metricsets: ["stats"]
-  enabled: true
-  period: 10s
-  hosts: ["localhost:9090"]
+#- module: prometheus
+  #metricsets: ["stats"]
+  #enabled: false
+  #period: 10s
+  #hosts: ["localhost:9090"]
   #metrics_path: /metrics
   #namespace: example
 
-- module: prometheus
-  metricsets: ["collector"]
-  enabled: true
-  period: 10s
-  hosts: ["localhost:9090"]
+#- module: prometheus
+  #metricsets: ["collector"]
+  #enabled: false
+  #period: 10s
+  #hosts: ["localhost:9090"]
   #metrics_path: /metrics
   #namespace: example
 
@@ -596,11 +596,11 @@ metricbeat.modules:
   #  - /var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt
 
 #------------------------------ RabbitMQ Module ------------------------------
-- module: rabbitmq
-  metricsets: ["node", "queue", "connection"]
-  enabled: true
-  period: 10s
-  hosts: ["localhost:15672"]
+#- module: rabbitmq
+  #metricsets: ["node", "queue", "connection"]
+  #enabled: false
+  #period: 10s
+  #hosts: ["localhost:15672"]
 
   # Management path prefix, if `management.path_prefix` is set in RabbitMQ
   # configuration, it has to be set to the same value.
@@ -610,13 +610,13 @@ metricbeat.modules:
   #password: guest
 
 #-------------------------------- Redis Module -------------------------------
-- module: redis
-  metricsets: ["info", "keyspace"]
-  enabled: true
-  period: 10s
+#- module: redis
+  #metricsets: ["info", "keyspace"]
+  #enabled: false
+  #period: 10s
 
   # Redis hosts
-  hosts: ["127.0.0.1:6379"]
+  #hosts: ["127.0.0.1:6379"]
 
   # Timeout after which time a metricset should return an error
   # Timeout is by default defined as period, as a fetch of a metricset
@@ -642,55 +642,55 @@ metricbeat.modules:
   #password: foobared
 
 #------------------------------- traefik Module ------------------------------
-- module: traefik
-  metricsets: ["health"]
-  period: 10s
-  hosts: ["localhost:8080"]
+#- module: traefik
+  #metricsets: ["health"]
+  #period: 10s
+  #hosts: ["localhost:8080"]
 
 #-------------------------------- uwsgi Module -------------------------------
-- module: uwsgi
-  metricsets: ["status"]
-  enable: true
-  period: 10s
-  hosts: ["tcp://127.0.0.1:9191"]
+#- module: uwsgi
+  #metricsets: ["status"]
+  #enable: false
+  #period: 10s
+  #hosts: ["tcp://127.0.0.1:9191"]
 
 #------------------------------- vSphere Module ------------------------------
-- module: vsphere
-  enabled: true
-  metricsets: ["datastore", "host", "virtualmachine"]
-  period: 10s
-  hosts: ["https://localhost/sdk"]
+#- module: vsphere
+  #enabled: false
+  #metricsets: ["datastore", "host", "virtualmachine"]
+  #period: 10s
+  #hosts: ["https://localhost/sdk"]
 
-  username: "user"
-  password: "password"
+  #username: "user"
+  #password: "password"
   # If insecure is true, don't verify the server's certificate chain
-  insecure: false
+  #insecure: false
   # Get custom fields when using virtualmachine metric set. Default false.
   # get_custom_fields: false
 
 #------------------------------- Windows Module ------------------------------
-- module: windows
-  metricsets: ["perfmon"]
-  enabled: true
-  period: 10s
-  perfmon.ignore_non_existent_counters: true
-  perfmon.counters:
+#- module: windows
+  #metricsets: ["perfmon"]
+  #enabled: false
+  #period: 10s
+  #perfmon.ignore_non_existent_counters: true
+  #perfmon.counters:
   #  - instance_label: processor.name
   #    instance_name: total
   #    measurement_label: processor.time.total.pct
   #    query: '\Processor Information(_Total)\% Processor Time'
 
-- module: windows
-  metricsets: ["service"]
-  enabled: true
-  period: 60s
+#- module: windows
+  #metricsets: ["service"]
+  #enabled: false
+  #period: 60s
 
 #------------------------------ ZooKeeper Module -----------------------------
-- module: zookeeper
-  enabled: true
-  metricsets: ["mntr", "server"]
-  period: 10s
-  hosts: ["localhost:2181"]
+#- module: zookeeper
+  #enabled: false
+  #metricsets: ["mntr", "server"]
+  #period: 10s
+  #hosts: ["localhost:2181"]
 
 
 
@@ -933,7 +933,7 @@ metricbeat.modules:
 #-------------------------- Elasticsearch output -------------------------------
 output.elasticsearch:
   # Boolean flag to enable or disable the output module.
-  #enabled: true
+  enabled: false
 
   # Array of hosts to connect to.
   # Scheme and port can be left out and will be set to the default (http and 9200)
@@ -1043,12 +1043,12 @@ output.elasticsearch:
 
 
 #----------------------------- Logstash output ---------------------------------
-#output.logstash:
+output.logstash:
   # Boolean flag to enable or disable the output module.
-  #enabled: true
+  enabled: true
 
   # The Logstash hosts
-  #hosts: ["localhost:5044"]
+  hosts: ["localhost:5044"]
 
   # Number of workers per Logstash host.
   #worker: 1
@@ -1468,38 +1468,38 @@ output.elasticsearch:
 # distribution (for example, the sample dashboards).
 # If not set by a CLI flag or in the configuration file, the default for the
 # home path is the location of the binary.
-#path.home:
+path.home: /usr/local/lib/metricbeat
 
 # The configuration path for the metricbeat installation. This is the default
 # base path for configuration files, including the main YAML configuration file
 # and the Elasticsearch template file. If not set by a CLI flag or in the
 # configuration file, the default for the configuration path is the home path.
-#path.config: ${path.home}
+path.config: /opt/kickstart-elk/metricbeat/conf
 
 # The data path for the metricbeat installation. This is the default base path
 # for all the files in which metricbeat needs to store its data. If not set by a
 # CLI flag or in the configuration file, the default for the data path is a data
 # subdirectory inside the home path.
-#path.data: ${path.home}/data
+path.data: /opt/kickstart-elk/metricbeat/data
 
 # The logs path for a metricbeat installation. This is the default location for
 # the Beat's log files. If not set by a CLI flag or in the configuration file,
 # the default for the logs path is a logs subdirectory inside the home path.
-#path.logs: ${path.home}/logs
+path.logs: /opt/kickstart-elk/metricbeat/log
 
 #================================ Keystore ==========================================
 # Location of the Keystore containing the keys and their sensitive values.
-#keystore.path: "${path.config}/beats.keystore"
+#keystore.path: "${path.home}/beats.keystore"
 
 #============================== Dashboards =====================================
 # These settings control loading the sample dashboards to the Kibana index. Loading
 # the dashboards are disabled by default and can be enabled either by setting the
 # options here, or by using the `-setup` CLI flag or the `setup` command.
-#setup.dashboards.enabled: false
+setup.dashboards.enabled: false
 
 # The directory from where to read the dashboards. The default is the `kibana`
 # folder in the home path.
-#setup.dashboards.directory: ${path.home}/kibana
+setup.dashboards.directory: ${path.home}/kibana
 
 # The URL from where to download the dashboards archive. It is used instead of
 # the directory if it has a value.
@@ -1543,19 +1543,19 @@ output.elasticsearch:
 # These settings can be adjusted to load your own template or overwrite existing ones.
 
 # Set to false to disable template loading.
-#setup.template.enabled: true
+setup.template.enabled: false
 
 # Template name. By default the template name is "metricbeat-%{[beat.version]}"
 # The template name and pattern has to be set in case the Elasticsearch index pattern is modified.
-#setup.template.name: "metricbeat-%{[beat.version]}"
+setup.template.name: "metricbeat-%{[beat.version]}"
 
 # Template pattern. By default the template pattern is "-%{[beat.version]}-*" to apply to the default index settings.
 # The first part is the version of the beat and then -* is used to match all daily indices.
 # The template name and pattern has to be set in case the Elasticsearch index pattern is modified.
-#setup.template.pattern: "metricbeat-%{[beat.version]}-*"
+setup.template.pattern: "metricbeat-%{[beat.version]}-*"
 
 # Path to fields.yml file to generate the template
-#setup.template.fields: "${path.config}/fields.yml"
+setup.template.fields: "${path.home}/fields.yml"
 
 # A list of fields to be added to the template and Kibana index pattern. Also
 # specify setup.template.overwrite: true to overwrite the existing template.
@@ -1568,7 +1568,7 @@ output.elasticsearch:
 #setup.template.json.enabled: false
 
 # Path to the JSON template file
-#setup.template.json.path: "${path.config}/template.json"
+setup.template.json.path: "${path.home}/template.json"
 
 # Name under which the template is stored in Elasticsearch
 #setup.template.json.name: ""
@@ -1582,8 +1582,8 @@ setup.template.settings:
   # A dictionary of settings to place into the settings.index dictionary
   # of the Elasticsearch template. For more details, please check
   # https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping.html
-  #index:
-    #number_of_shards: 1
+  index:
+    number_of_shards: 1
     #codec: best_compression
     #number_of_routing_shards: 30
 
@@ -1602,7 +1602,7 @@ setup.kibana:
   # Scheme and port can be left out and will be set to the default (http and 5601)
   # In case you specify and additional path, the scheme is required: http://localhost:5601/path
   # IPv6 addresses should always be defined as: https://[2001:db8::1]:5601
-  #host: "localhost:5601"
+  host: "localhost:5601"
 
   # Optional protocol and basic auth credentials.
   #protocol: "https"
@@ -1652,7 +1652,7 @@ setup.kibana:
 
 # Sets log level. The default log level is info.
 # Available log levels are: error, warning, info, debug
-#logging.level: info
+logging.level: info
 
 # Enable debug output for selected components. To enable all selectors use ["*"]
 # Other available selectors are "beat", "publish", "service"
@@ -1680,10 +1680,10 @@ logging.to_files: true
 logging.files:
   # Configure the path where the logs are written. The default is the logs directory
   # under the home path (the binary location).
-  #path: /var/log/metricbeat
+  path: ${path.logs}
 
   # The name of the files where the logs are written to.
-  #name: metricbeat
+  name: agent.log
 
   # Configure log file size limit. If limit is reached, log file will be
   # automatically rotated
@@ -1694,7 +1694,7 @@ logging.files:
 
   # The permissions mask to apply when rotating log files. The default value is 0600.
   # Must be a valid Unix-style file permissions mask expressed in octal notation.
-  #permissions: 0600
+  permissions: 0644
 
   # Enable log file rotation on time intervals in addition to size-based rotation.
   # Intervals must be at least 1s. Values of 1m, 1h, 24h, 7*24h, 30*24h, and 365*24h
@@ -1817,15 +1817,15 @@ logging.files:
 # append ?pretty to the URL.
 
 # Defines if the HTTP endpoint is enabled.
-#http.enabled: false
+http.enabled: false
 
 # The HTTP endpoint will bind to this hostname or IP address. It is recommended to use only localhost.
-#http.host: localhost
+http.host: localhost
 
 # Port on which the HTTP endpoint will bind. Default is 5066.
-#http.port: 5066
+http.port: 5066
 
 #============================= Process Security ================================
 
 # Enable or disable seccomp system call filtering on Linux. Default is enabled.
-#seccomp.enabled: true
+seccomp.enabled: false
