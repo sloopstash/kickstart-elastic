@@ -1,0 +1,9 @@
+- type: http
+  id: sloopstash-aia-app
+  name: SloopStash AIA app
+  enabled: true
+  schedule: '@every 10s'
+  hosts: ["http://app.aia.sloopstash.dv:8001/health"]
+  ipv4: true
+  ipv6: false
+  mode: any

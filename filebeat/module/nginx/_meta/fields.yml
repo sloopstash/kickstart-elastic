@@ -1,8 +1,0 @@
-- key: nginx
-  title: Nginx
-  description: Filebeat module to collect and push Nginx log data to Logstash.
-  fields:
-    - name: nginx
-      type: group
-      description: Fields associated with this module.
-      fields:

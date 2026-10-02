@@ -1,0 +1,37 @@
+- module: system
+  period: 10s
+  metricsets:
+    - cpu
+    - load
+    - memory
+    - network
+    - process
+    - process_summary
+    - socket_summary
+    - entropy
+    - core
+    - diskio
+    - socket
+    - service
+    - users
+  process.include_top_n:
+    by_cpu: 5
+    by_memory: 5
+  degrade_on_partial: false
+- module: system
+  period: 1m
+  metricsets:
+    - filesystem
+    - fsstat
+  processors:
+    - drop_event.when.regexp:
+        system.filesystem.mount_point: '^/(sys|cgroup|proc|dev|etc|host|lib|snap)($|/)'
+- module: system
+  period: 15m
+  metricsets:
+    - uptime
+- module: system
+  period: 5m
+  metricsets:
+    - raid
+  raid.mount_point: '/'
